@@ -5,7 +5,6 @@ ENV APPDIR /usr/src/app
 WORKDIR $APPDIR
 
 COPY ./src $APPDIR/src
-COPY ./typings $APPDIR/typings
 COPY ./tsconfig.json $APPDIR/tsconfig.json
 COPY ./package.json $APPDIR/package.json
 COPY ./package-lock.json $APPDIR/package-lock.json
