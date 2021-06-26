@@ -1,0 +1,37 @@
+{
+  "name": "puppeteer-proverbia-script",
+  "version": "1.0.0",
+  "description": "Puppeteer script to fetch the phrase of the day and return it as a JSON response",
+  "main": "src/index.ts",
+  "engines": {
+    "node": ">=14.17.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm/transpile-only src/index.ts",
+    "prebuild": "rm -rf dist/",
+    "build": "tsc",
+    "lint": "eslint 'src/**/*.ts' --quiet --fix"
+  },
+  "author": "Sebastian Barrenechea (https://github.com/sebastianbar/puppeteer-proverbia-script)",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastianbar/puppeteer-proverbia-script.git"
+  },
+  "devDependencies": {
+    "@types/node": "^14.17.4",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.4"
+  },
+  "optionalDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.0",
+    "@typescript-eslint/parser": "^4.28.0",
+    "eslint": "^7.29.0"
+  },
+  "dependencies": {
+    "puppeteer": "^10.0.0"
+  }
+}
