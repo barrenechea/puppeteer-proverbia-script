@@ -4,12 +4,12 @@
   "description": "Puppeteer script to fetch the phrase of the day and return it as a JSON response",
   "main": "src/index.ts",
   "engines": {
-    "node": ">=14.17.0"
+    "node": ">=16"
   },
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm/transpile-only src/index.ts",
+    "dev": "node --loader ts-node/esm/transpile-only src/index.ts",
     "prebuild": "rm -rf dist/",
     "build": "tsc",
     "lint": "eslint 'src/**/*.ts' --quiet --fix"
@@ -22,16 +22,16 @@
     "url": "https://github.com/sebastianbar/puppeteer-proverbia-script.git"
   },
   "devDependencies": {
-    "@types/node": "^14.17.4",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.4"
+    "@types/node": "^17.0.23",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
   },
   "optionalDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.28.0",
-    "@typescript-eslint/parser": "^4.28.0",
-    "eslint": "^7.29.0"
+    "@typescript-eslint/eslint-plugin": "^5.19.0",
+    "@typescript-eslint/parser": "^5.19.0",
+    "eslint": "^8.13.0"
   },
   "dependencies": {
-    "puppeteer": "^10.0.0"
+    "puppeteer": "^13.5.2"
   }
 }

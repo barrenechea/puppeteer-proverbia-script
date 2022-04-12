@@ -2,10 +2,10 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ES2020", "DOM"],
+    "lib": ["ES2021", "DOM"],
     "module": "ES2020",
     "moduleResolution": "node",
-    "target": "ES2020",
+    "target": "ES2021",
     "outDir": "dist",
     "rootDir": "src",
     "strict": true,

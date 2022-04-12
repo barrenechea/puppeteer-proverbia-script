@@ -1,4 +1,4 @@
-FROM node:14.17.1-alpine as build-stage
+FROM node:16-alpine as build-stage
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV APPDIR /usr/src/app
@@ -14,7 +14,7 @@ RUN npm ci --no-optional
 RUN npm run build
 
 # Deploy
-FROM node:14.17.1-alpine
+FROM node:16-alpine
 
 RUN apk add --no-cache chromium
 
