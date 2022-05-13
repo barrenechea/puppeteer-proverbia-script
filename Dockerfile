@@ -1,36 +1,44 @@
-FROM node:18-alpine as build-stage
+# ---
+FROM node:18-alpine AS dev-deps
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# ---
+FROM node:18-alpine AS prd-deps
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+WORKDIR /app
+COPY package.json package-lock.json ./
+COPY --from=dev-deps /app/node_modules ./node_modules
+RUN npm prune --omit=dev --omit=optional
+
+# ---
+FROM node:18-alpine as builder
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-ENV APPDIR /usr/src/app
+ENV APPDIR /app
 WORKDIR $APPDIR
 
-COPY ./src $APPDIR/src
-COPY ./tsconfig.json $APPDIR/tsconfig.json
-COPY ./package.json $APPDIR/package.json
-COPY ./package-lock.json $APPDIR/package-lock.json
-
-RUN npm ci --no-optional
+COPY . .
+COPY --from=dev-deps /app/node_modules ./node_modules
 
 RUN npm run build
 
-# Deploy
-FROM node:18-alpine
+# ---
+FROM node:18-alpine as runner
 
 RUN apk add --no-cache chromium
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV NODE_ENV production
 ENV CHROMIUM_PATH /usr/bin/chromium-browser
-ENV BUILDDIR /usr/src/app
-ENV APPDIR /usr/src/app
+ENV APPDIR /app
 
 RUN mkdir -p $APPDIR && chown -R node:node $APPDIR
 WORKDIR $APPDIR
 
-COPY --from=build-stage --chown=node:node $BUILDDIR/dist $APPDIR/dist
-COPY --chown=node:node ./package.json $APPDIR/package.json
-COPY --chown=node:node ./package-lock.json $APPDIR/package-lock.json
-
-RUN npm ci --production --no-optional
+COPY --from=prd-deps --chown=node:node /app/node_modules ./node_modules
+COPY --from=builder --chown=node:node /app/dist ./dist
 
 USER node
-CMD [ "npm", "start" ]
+CMD [ "node", "dist/index.js" ]
