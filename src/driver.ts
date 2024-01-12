@@ -1,6 +1,5 @@
 import puppeteer, { Browser, Page } from 'puppeteer';
 
-declare const document: Document & { formulario: any };
 type ProverbiaQuote = {
   text: string;
   author: string;
@@ -9,11 +8,10 @@ type ProverbiaQuote = {
 class ProverbiaDriver {
   private browser?: Browser;
   private page?: Page;
-  private userData?: any;
   public fullName?: string;
 
   public async init() {
-    const launchArgs: { headless: boolean, executablePath?: string, args?: string[] } = { headless: true };
+    const launchArgs: { headless: boolean | 'new', executablePath?: string, args?: string[] } = { headless: 'new' };
 
     if (process.env.CHROMIUM_PATH) {
       launchArgs.executablePath = process.env.CHROMIUM_PATH as string;
@@ -36,7 +34,7 @@ class ProverbiaDriver {
     try {
       await this.page?.goto('https://proverbia.net/', { waitUntil: 'domcontentloaded' });
 
-      const quotes = await this.page?.evaluate(() => {
+      const mappedQuotes = await this.page?.evaluate(() => {
         const returnValue: ProverbiaQuote[] = [];
         /** In this array you'll have all quotes available on the landing site (not just the daily one) */
         const quotes = document.getElementsByClassName('bsquote');
@@ -49,11 +47,11 @@ class ProverbiaDriver {
             returnValue.push({ text, author });
           }
         }
-        
+
         return returnValue;
       });
 
-      return quotes || [];
+      return mappedQuotes || [];
     }
     catch (e) {
       console.log(e);
