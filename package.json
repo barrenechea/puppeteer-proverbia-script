@@ -22,16 +22,16 @@
     "url": "https://github.com/barrenechea/puppeteer-proverbia-script.git"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^20.11.19",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   },
   "optionalDependencies": {
-    "@typescript-eslint/eslint-plugin": "^6.18.1",
-    "@typescript-eslint/parser": "^6.18.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.56.0"
   },
   "dependencies": {
-    "puppeteer": "^21.7.0"
+    "puppeteer": "^22.1.0"
   }
 }

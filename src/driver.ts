@@ -1,4 +1,4 @@
-import puppeteer, { Browser, Page } from 'puppeteer';
+import puppeteer, { Browser, Page, type PuppeteerLaunchOptions } from 'puppeteer';
 
 type ProverbiaQuote = {
   text: string;
@@ -11,7 +11,7 @@ class ProverbiaDriver {
   public fullName?: string;
 
   public async init() {
-    const launchArgs: { headless: boolean | 'new', executablePath?: string, args?: string[] } = { headless: 'new' };
+    const launchArgs: PuppeteerLaunchOptions = { headless: true };
 
     if (process.env.CHROMIUM_PATH) {
       launchArgs.executablePath = process.env.CHROMIUM_PATH as string;
