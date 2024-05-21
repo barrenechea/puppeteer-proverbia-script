@@ -4,7 +4,7 @@
   "description": "Puppeteer script to fetch the phrase of the day and return it as a JSON response",
   "main": "src/index.ts",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "type": "module",
   "scripts": {
@@ -22,16 +22,16 @@
     "url": "https://github.com/barrenechea/puppeteer-proverbia-script.git"
   },
   "devDependencies": {
-    "@types/node": "^20.11.19",
+    "@types/node": "^20.12.12",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.5"
   },
   "optionalDependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
-    "@typescript-eslint/parser": "^7.0.2",
-    "eslint": "^8.56.0"
+    "@typescript-eslint/eslint-plugin": "^7.10.0",
+    "@typescript-eslint/parser": "^7.10.0",
+    "eslint": "^8.57.0"
   },
   "dependencies": {
-    "puppeteer": "^22.1.0"
+    "puppeteer": "^22.9.0"
   }
 }
