@@ -32,6 +32,6 @@
     "eslint": "^8.57.0"
   },
   "dependencies": {
-    "puppeteer": "^22.11.1"
+    "puppeteer": "^22.11.2"
   }
 }
