@@ -1,4 +1,4 @@
-import proverbiaDriver from './driver.js';
+import proverbiaDriver from "./driver.js";
 
 const quotes = await proverbiaDriver.getProverbia();
 
