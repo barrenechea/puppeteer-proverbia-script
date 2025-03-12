@@ -1,8 +1,4 @@
-import puppeteer, {
-  Browser,
-  Page,
-  type PuppeteerLaunchOptions,
-} from "puppeteer";
+import puppeteer, { Browser, Page, type LaunchOptions } from "puppeteer";
 
 type ProverbiaQuote = {
   text: string;
@@ -45,7 +41,7 @@ class ProverbiaDriver {
   }
 
   public async init() {
-    const launchArgs: PuppeteerLaunchOptions = { headless: true };
+    const launchArgs: LaunchOptions = { headless: true };
 
     if (process.env.CHROMIUM_PATH) {
       launchArgs.executablePath = process.env.CHROMIUM_PATH as string;
@@ -69,45 +65,39 @@ class ProverbiaDriver {
     await this.browser?.close();
   }
 
-  public async getProverbia(): Promise<ProverbiaQuote[]> {
+  public async getQuoteOfTheDay(): Promise<ProverbiaQuote | null> {
     if (!this.browser || !this.page) await this.init();
 
     try {
       await this.page?.goto("https://proverbia.net/", {
-        waitUntil: "domcontentloaded",
+        waitUntil: "networkidle0",
       });
 
-      const mappedQuotes = await this.page?.evaluate(() => {
-        const returnValue: ProverbiaQuote[] = [];
-        /** In this array you'll have all quotes available on the landing site (not just the daily one) */
-        const quotes = document.getElementsByClassName("bsquote");
+      const quote = await this.page?.evaluate(() => {
+        // Find the quote of the day in the new structure
+        const quoteBlock = document.querySelector("blockquote.qotd-home");
 
-        for (let itemIdx = 0; itemIdx < quotes.length; itemIdx++) {
-          const text = (
-            document
-              .getElementsByClassName("bsquote")
-              .item(itemIdx)
-              ?.children.item(0) as HTMLElement
-          )?.innerText;
-          const author = (
-            document
-              .getElementsByClassName("bsquote")
-              .item(itemIdx)
-              ?.children.item(1) as HTMLElement
-          )?.innerText;
+        if (quoteBlock) {
+          // Extract text from the <p> element inside blockquote
+          const textElement = quoteBlock.querySelector("p");
+          // Extract author from the <a> element inside footer
+          const authorElement = quoteBlock.querySelector("footer a");
+
+          const text = textElement?.textContent?.trim();
+          const author = authorElement?.textContent?.trim();
 
           if (text && author) {
-            returnValue.push({ text, author });
+            return { text, author };
           }
         }
 
-        return returnValue;
+        return null;
       });
 
-      return mappedQuotes || [];
+      return quote ?? null;
     } catch (e) {
       console.log(e);
-      return [];
+      return null;
     }
   }
 }
