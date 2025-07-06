@@ -1,12 +1,12 @@
 # ---
-FROM node:22-alpine AS dev-deps
+FROM node:24-alpine AS dev-deps
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
 # ---
-FROM node:22-alpine AS prd-deps
+FROM node:24-alpine AS prd-deps
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 WORKDIR /app
 COPY package.json package-lock.json ./
@@ -14,7 +14,7 @@ COPY --from=dev-deps /app/node_modules ./node_modules
 RUN npm prune --omit=dev --omit=optional
 
 # ---
-FROM node:22-alpine as builder
+FROM node:24-alpine as builder
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 ENV APPDIR /app
@@ -26,7 +26,7 @@ COPY --from=dev-deps /app/node_modules ./node_modules
 RUN npm run build
 
 # ---
-FROM node:22-alpine as runner
+FROM node:24-alpine as runner
 
 RUN apk add --no-cache chromium
 
