@@ -9,7 +9,7 @@
     "dev": "tsx src/index.ts",
     "prebuild": "rm -rf dist/",
     "build": "tsc",
-    "lint": "eslint 'src/**/*.ts' --quiet --fix"
+    "lint": "eslint"
   },
   "author": "Sebastian Barrenechea (https://github.com/barrenechea)",
   "license": "MIT",
@@ -18,18 +18,16 @@
     "type": "git",
     "url": "https://github.com/barrenechea/puppeteer-proverbia-script.git"
   },
-  "packageManager": "npm@11.2.0",
+  "packageManager": "npm@11.12.1",
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@types/node": "^22.13.10",
-    "@typescript-eslint/eslint-plugin": "^8.26.1",
-    "@typescript-eslint/parser": "^8.26.1",
-    "eslint": "^9.22.0",
-    "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.1"
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "eslint": "^10.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.58.2"
   },
   "dependencies": {
-    "puppeteer": "^24.4.0"
+    "puppeteer": "^24.41.0"
   }
 }
