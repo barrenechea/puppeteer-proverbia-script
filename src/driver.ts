@@ -1,4 +1,8 @@
-import puppeteer, { Browser, Page, type LaunchOptions } from "puppeteer";
+import puppeteer, {
+  type Browser,
+  type LaunchOptions,
+  type Page,
+} from "puppeteer";
 
 type ProverbiaQuote = {
   text: string;
@@ -24,7 +28,7 @@ class ProverbiaDriver {
         if (
           successMessage &&
           successMessage.textContent?.includes(
-            "Congratulations. This browser is configured to use Tor."
+            "Congratulations. This browser is configured to use Tor.",
           )
         ) {
           return true;
@@ -44,7 +48,7 @@ class ProverbiaDriver {
     const launchArgs: LaunchOptions = { headless: true };
 
     if (process.env.CHROMIUM_PATH) {
-      launchArgs.executablePath = process.env.CHROMIUM_PATH as string;
+      launchArgs.executablePath = process.env.CHROMIUM_PATH;
       launchArgs.args = ["--no-sandbox", "--window-size=1366,768"];
     }
 
@@ -56,7 +60,7 @@ class ProverbiaDriver {
 
     this.browser = await puppeteer.launch(launchArgs);
     this.page = await this.browser.newPage();
-    this.page?.setViewport({ width: 1366, height: 768 });
+    await this.page.setViewport({ width: 1366, height: 768 });
     await this.checkAnonimity();
   }
 
